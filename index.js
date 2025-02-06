@@ -64,15 +64,63 @@ container.appendChild(input);
 input.className = "input";
 
 for (let i = 0; i < array.length; i++) {
-  const div = document.createElement("div");
-
-  div.innerText = array[i];
-
-  div.className = "btn";
-
-  container.appendChild(div);
+  createElement("button", container, "btn", array[i], input);
 }
 
 container.className = "container";
 
 body.appendChild(container);
+
+function createElement(
+  elementName,
+  appendElement,
+  className,
+  innerText,
+  input
+) {
+  const element = document.createElement(elementName);
+
+  element.innerText = innerText;
+
+  element.className = className;
+
+  element.onclick = () => {
+    if (innerText == "=") {
+      try {
+        input.value = eval(input.value);
+      } catch (e) {
+        input.value = "Error";
+      }
+    } else if (innerText == "AC") {
+      input.value = "";
+    } else {
+      input.value += innerText;
+      console.log(input.value);
+    }
+  };
+
+  appendElement.appendChild(element);
+}
+
+// console.log(eval("-2+2"));
+
+// if (
+//   innerText == "+" ||
+//   innerText == "-" ||
+//   innerText == "*" ||
+//   innerText == "/" ||
+//   innerText == "%"
+// ) {
+//   input.value += " " + innerText + " ";
+// } else if (innerText == "AC") {
+//   input.value = "";
+// } else if (innerText == "=") {
+//   try {
+//     input.value = eval(input.value);
+//   } catch (e) {
+//     input.value = "Error";
+//   }
+// } else {
+//   input.value += innerText;
+//   console.log(input.value);
+// }
