@@ -28,7 +28,6 @@
 
 /* <div class="btn">7</div> */
 
-console.log("working...");
 //     <div class="btn">7</div>
 const body = document.querySelector("body");
 
@@ -85,17 +84,47 @@ function createElement(
   element.className = className;
 
   element.onclick = () => {
-    if (innerText == "=") {
-      try {
-        input.value = eval(input.value);
-      } catch (e) {
-        input.value = "Error";
-      }
+    if (
+      innerText == "+" ||
+      innerText == "-" ||
+      innerText == "*" ||
+      innerText == "/" ||
+      innerText == "%"
+    ) {
+      input.value += " " + innerText + " ";
     } else if (innerText == "AC") {
       input.value = "";
+    } else if (innerText == "=") {
+      const array1 = input.value.split(" ");
+      let total = Number(array1[0]);
+      for (let i = 1; i < array1.length; i += 2) {
+        const operator = array1[i];
+        const nextNumber = Number(array1[i + 1]);
+        switch (operator) {
+          case "+":
+            total += nextNumber;
+            break;
+          case "-":
+            total -= nextNumber;
+            break;
+          case "*":
+            total *= nextNumber;
+            break;
+          case "/":
+            total /= nextNumber;
+            break;
+          case "%":
+            total %= nextNumber;
+            break;
+          default:
+            input.value = "Error";
+            return;
+        }
+      }
+      input.value = total;
     } else {
       input.value += innerText;
-      console.log(input.value);
+      //   console.log(input.value);
     }
   };
 
@@ -124,3 +153,16 @@ function createElement(
 //   input.value += innerText;
 //   console.log(input.value);
 // }
+
+//   if (innerText == "=") {
+//     try {
+//       input.value = eval(input.value);
+//     } catch (e) {
+//       input.value = "Error";
+//     }
+//   } else if (innerText == "AC") {
+//     input.value = "";
+//   } else {
+//     input.value += innerText;
+//     console.log(input.value);
+//   }
